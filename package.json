@@ -1,0 +1,14 @@
+{
+  "name": "ecomnodeapi",
+  "version": "1.0.0",
+  "description": "Ecommerce NodeJS API with user Authentication",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "PanditProgrammer",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
