@@ -9,6 +9,9 @@ const api_url = process.env.API_URL;
 const bodyParser = require("body-parser");
 server.use(bodyParser.json());
 
+// for http request log 
+const morgan = require("morgan");
+server.use(morgan("tiny"))
 
 
 server.post(api_url+"/products",(req,res)=>{
