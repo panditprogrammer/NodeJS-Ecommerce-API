@@ -13,6 +13,9 @@ server.use(bodyParser.json());
 const morgan = require("morgan");
 server.use(morgan("tiny"))
 
+// mongoDB database connection with mongoose
+const mongoose = require("mongoose");
+
 
 server.post(api_url+"/products",(req,res)=>{
     let product = req.body;
@@ -23,6 +26,13 @@ server.post(api_url+"/products",(req,res)=>{
 
 
 
+// connect with database 
+mongoose.connect(process.env.CONNECTION_STRING)
+.then(()=>{
+    console.log("MongoDB Connected!");
+}).catch((error)=>{
+    console.log(error);
+})
 
 server.listen(port,()=>{
     console.log(`server is running http://localhost:${port}${api_url}`);
