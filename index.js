@@ -17,10 +17,35 @@ server.use(morgan("tiny"))
 const mongoose = require("mongoose");
 
 
+
+// create schemas for product 
+const productSchema = mongoose.Schema({
+    name: String,
+    image: String,
+    price: Number,
+    stock: Number
+});
+
+// create Collection in mongoDB 
+const Product = mongoose.model('product',productSchema);
+
 server.post(api_url+"/products",(req,res)=>{
-    let product = req.body;
-    console.log(product);
-    res.send(product);
+   const product = new Product({
+    name: req.body.name,
+    image: req.body.image,
+    price: req.body.price,
+    stock: req.body.stock
+   });
+
+//    save to database 
+product.save().then((created)=>{
+    res.status(201).json(created);
+}).catch((error)=>{
+    res.status(500).json({
+        error: error,
+        success: false
+    });
+});
 });
 
 
