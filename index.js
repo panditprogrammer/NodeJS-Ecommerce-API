@@ -17,8 +17,12 @@ server.use(morgan("tiny"))
 
 
 // product router 
-const productRounter = require("./routers/products");
-server.use("/",productRounter);
+const productRouter = require("./routers/products");
+server.use("/",productRouter);
+
+// category router 
+const categoryRouter = require("./routers/categories");
+server.use("/categories", categoryRouter);
 
 
 // ==================== Middlewares ends ==========================
