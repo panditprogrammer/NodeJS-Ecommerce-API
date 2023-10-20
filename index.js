@@ -23,7 +23,10 @@ const productSchema = mongoose.Schema({
     name: String,
     image: String,
     price: Number,
-    stock: Number
+    stock: {
+        type: Number,
+        required: true
+    }
 });
 
 // create Collection in mongoDB 
