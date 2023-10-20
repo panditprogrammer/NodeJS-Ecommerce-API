@@ -52,7 +52,9 @@ product.save().then((created)=>{
 
 
 // connect with database 
-mongoose.connect(process.env.CONNECTION_STRING)
+mongoose.connect(process.env.CONNECTION_STRING,{
+    dbName: "nodeapidb" 
+})
 .then(()=>{
     console.log("MongoDB Connected!");
 }).catch((error)=>{
