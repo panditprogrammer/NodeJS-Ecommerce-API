@@ -3,7 +3,9 @@
 
 ## POST 
 - Create New Product
-```/products```
+```
+/products
+```
 
 use these fields to create new product
 
@@ -20,11 +22,14 @@ use these fields to create new product
     "rating": number,
     "review": number,
     "featured": false
-}```
+}
+```
 
 ## GET
 -  Get all Products
- `/products`
+ ```
+ /products
+ ```
 
 -  Get all Products by price 
  /products?price=min&price=max
@@ -60,28 +65,44 @@ use these fields to create new product
 ## DELETE
 
 - Delete one or more product(s) by id
-`/products/delete?id=id1,id2,idN`
+```
+/products/delete?id=id1,id2,idN
+```
 
 - Delete all products at once
-`/products/delete`
+```
+/products/delete
+```
 
 # Category Routes
 Here is the Supported HTTP Routes (GET, POST, PUT and DELETE)
 
 - Create New Category
-`/categories`
+```
+/categories
+```
 
 - Get all Categories
-`/categories`
+```
+/categories
+```
 
 - Get Single Category by id
-`/categories/:id`
+```
+/categories/:id
+```
 
 - Update single category by id 
-`/categories/:id`
+```
+/categories/:id
+```
 
 - Delete one or more Categories  
-`/categories/delete?id=id1,id2,idN`
+```
+/categories/delete?id=id1,id2,idN
+```
 
 - Delete all at once
-`/categories/delete`
+```
+/categories/delete
+```
