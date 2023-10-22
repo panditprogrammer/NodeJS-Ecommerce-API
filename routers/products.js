@@ -109,19 +109,17 @@ router.put("/:id", async (req, res) => {
 
 
 // delete product 
-router.delete("/:id", (req, res) => {
+router.delete("/delete", (req, res) => {
+    let filter = {};
 
-    if (!mongoose.isValidObjectId(req.params.id)) {
-        return res.status(400).json({ success: false, message: "Invalid Product id!" });
+    // delete multiple documents 
+    if (req.query.id) {
+        filter = { _id: { $in: req.query.id.split(",") } };
     }
 
 
-    Product.findByIdAndRemove(req.params.id).then(product => {
-        if (product) {
-            return res.status(200).json({ success: true, message: "The Product is deleted!" });
-        } else {
-            return res.status(404).json({ success: false, message: "The Product id not found!" });
-        }
+    Product.deleteMany(filter).then(product => {
+        return res.status(200).json(product);
     }).catch((error) => {
         return res.status(400).json({ success: false, error: error });
     })

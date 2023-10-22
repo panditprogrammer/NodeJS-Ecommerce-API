@@ -1,8 +1,13 @@
 <!-- get routes  -->
 # Product Routes 
 
+## POST 
+- Create New Product
+`/products`
+
+## GET
 -  Get all Products
- /products
+ `/products`
 
 -  Get all Products by price 
  /products?price=min&price=max
@@ -35,7 +40,13 @@
 -  Filter featured products by Brand
 /products/get/featured/brand/brandname
 
+## DELETE
 
+- Delete one or more product(s) by id
+`/products/delete?id=id1,id2,idN`
+
+- Delete all products at once
+`/products/delete`
 
 # Category Routes
 Here is the Supported HTTP Routes (GET, POST, PUT and DELETE)
