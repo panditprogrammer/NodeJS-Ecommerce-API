@@ -83,6 +83,13 @@ use these fields to create new product
 /products/:id
 ```
 
+- Upload product images by id
+
+```
+/products/uploads/:id
+```
+
+
 ## DELETE
 
 - Delete one or more product(s) by id
