@@ -4,6 +4,7 @@
 ## POST 
 
 - Create New Product
+
 ```
 /products
 ```
@@ -35,37 +36,52 @@ use these fields to create new product
  /products
  ```
 
--  Get all Products by price 
-
- /products?price=min&price=max
-
--  Get all Products Filter by Categories and price
-/products?categories=id1,id2,idN?price=min&price=max
-
--  Get all Products Filter by Brand 
-/products/brand/brandname
-
--  Get all Products Filter by Brand and category
-/products/brand/brandname?categories=id1,id2,idN
-
--  Get all Products Filter by Brand and category and price
-/products/brand/brandname?categories=id1,id2,idN?price=min&price=max
-
--  Get all Products Filter by Brand and Price 
-/products/brand/brandname?price=min&price=max
-
-
 -  get single product by id
+
+```
 /products/:id
+```
 
--  Get only Featured Products
-/products/get/featured
+## Filter Products with query parameters
 
--  Filter featured products by Categories
-/products/get/featured?categories=id1,id2,idN
+- Filter products by category (id)
 
--  Filter featured products by Brand
-/products/get/featured/brand/brandname
+```
+/products?categories=id1,id2,idN
+```
+
+- Filter Products by Brands
+
+```
+/products?brands=intel
+```
+
+- Filter Products by featured (true, false)
+
+```
+/products?featured=true
+```
+
+- Filter products by Price range
+
+```
+/products?min=500&max=1500
+```
+
+-- Limit and offset Products list
+
+```
+/products?limit=10&offset=5
+```
+
+
+## PUT 
+
+- Update Product by id
+
+```
+/products/:id
+```
 
 ## DELETE
 
@@ -78,6 +94,8 @@ use these fields to create new product
 ```
 /products/delete
 ```
+
+
 
 # Category Routes
 

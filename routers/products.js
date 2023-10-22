@@ -43,20 +43,51 @@ router.post("/", async (req, res) => {
 });
 
 
-
 // get all products 
-router.get("/", async (req, res) => {
+router.get("/", (req, res) => {
+    // limit products list 
+    const limit = req.query.limit > 0 ? req.query.limit : 0;
+
+    // offset (start from)
+    const offset = req.query.offset > 0 ? req.query.offset: 0;
+
+    // filter products 
     let filter = {};
 
+    // by categories 
     if (req.query.categories) {
-        filter = { category: req.query.categories.split(",") };
+        filter.category = { $in: req.query.categories.split(",") };
     }
+
+    // by featured 
+    if (req.query.featured) {
+        filter.featured = req.query.featured;
+    }
+
+    // by brands 
+    if (req.query.brands) {
+        filter.brand = { $in: req.query.brands.split(",") };
+    }
+    
+    // by price 
+    let min_price = req.query.min > 0 ? req.query.min : 0; 
+    let max_price = req.query.max > 0 ? req.query.max : 0; 
+
+    if (min_price) {
+        filter.price = { $gt: parseInt(min_price) };
+    }
+    if (max_price) {
+        filter.price = { $lt: parseInt(max_price) };
+    }
+
+
     // all product along with their category 
-    const products = await Product.find(filter).populate("category");
-    if (!products) {
-        return res.status(404).json({ success: false, message: "No products found!" });
-    }
-    res.status(200).send(products);
+    Product.find(filter).populate("category").limit(parseInt(limit)).skip(offset).then((products) => {
+        return res.status(200).json(products);
+    }).catch((error) => {
+        return res.status(400).json({ success: false, error: error });
+    });
+
 });
 
 
@@ -108,7 +139,7 @@ router.put("/:id", async (req, res) => {
 })
 
 
-// delete product 
+// delete one or more product(s) by id
 router.delete("/delete", (req, res) => {
     let filter = {};
 
@@ -125,44 +156,6 @@ router.delete("/delete", (req, res) => {
     })
 
 });
-
-
-// get the product count 
-router.get("/get/count", async (req, res) => {
-    const count = await Product.countDocuments();
-    if (!count) {
-        res.status(500).json({ success: false })
-    }
-
-    res.send({ productCount: count });
-})
-
-
-
-// get only featured products 
-router.get("/get/featured", async (req, res) => {
-    const featured = await Product.find({ featured: true });
-    if (!featured) {
-        res.status(500).json({ success: false })
-    }
-
-    res.send({ productfeatured: featured });
-})
-
-
-// get only featured products with limit
-router.get("/get/featured/:limit", async (req, res) => {
-    const limit = req.params.limit ? req.params.limit : 0;
-
-    const featured = await Product.find({ featured: true }).limit(parseInt(limit));
-
-    if (!featured) {
-        res.status(500).json({ success: false })
-    }
-
-    res.send({ productfeatured: featured });
-})
-
 
 
 
