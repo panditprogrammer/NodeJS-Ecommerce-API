@@ -1,26 +1,68 @@
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
+const { path } = require("path");
 
 // include product schema
 const { Product } = require("../models/product");
 const { Category } = require("../models/category");
 
+// for file upload 
+const multer = require("multer");
+
+const fileTypeMap = {
+    "image/png": "png",
+    "image/jpeg": "jpeg",
+    "image/jpg": "jpg",
+}
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        // validate image type 
+        const isValid = fileTypeMap[file.mimetype];
+       let uploadError = "only png,jpeg,jpg files allowed!";
+        
+        if (isValid) {
+            uploadError = null;
+        }
+        cb(uploadError, 'public/uploads')
+    },
+
+    filename: function (req, file, cb) {
+        let fileName = file.originalname.substring(0, file.originalname.lastIndexOf("."));
+        let extension = fileTypeMap[file.mimetype];
+
+        const uniqueFilename = fileName.replace(" ", "-") + '_' + Date.now() + "." + extension;
+        cb(null, uniqueFilename);
+    }
+})
+
+const uploadOptions = multer({ storage: storage })
+
+
 
 //====================  routes
 // insert new product
-router.post("/", async (req, res) => {
+router.post("/", uploadOptions.single("image"), async (req, res) => {
 
     const category = await Category.findById(req.body.category);
     if (!category) {
         return res.status(400).json({ success: false, message: "Invalid Category!" });
     }
 
+    // if request has file or not
+    const file = req.file;
+    
+    if (!file) {
+        return res.status(400).json({ success: false, message: "Image is required!" });
+    }
+
+
     let product = new Product({
         name: req.body.name,
         description: req.body.description,
         richDescription: req.body.richDescription,
-        image: req.body.image,
+        image: basePath = `${req.protocol}://${req.get("host")}/public/uploads/${file.filename}`,
         brand: req.body.brand,
         price: req.body.price,
         category: req.body.category,
@@ -49,7 +91,7 @@ router.get("/", (req, res) => {
     const limit = req.query.limit > 0 ? req.query.limit : 0;
 
     // offset (start from)
-    const offset = req.query.offset > 0 ? req.query.offset: 0;
+    const offset = req.query.offset > 0 ? req.query.offset : 0;
 
     // filter products 
     let filter = {};
@@ -68,10 +110,10 @@ router.get("/", (req, res) => {
     if (req.query.brands) {
         filter.brand = { $in: req.query.brands.split(",") };
     }
-    
+
     // by price 
-    let min_price = req.query.min > 0 ? req.query.min : 0; 
-    let max_price = req.query.max > 0 ? req.query.max : 0; 
+    let min_price = req.query.min > 0 ? req.query.min : 0;
+    let max_price = req.query.max > 0 ? req.query.max : 0;
 
     if (min_price) {
         filter.price = { $gt: parseInt(min_price) };
