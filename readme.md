@@ -5,6 +5,22 @@
 - Create New Product
 `/products`
 
+use these fields to create new product
+
+`{
+   "name": "",
+    "description":"",
+    "richDescription": "",
+    "image": [],
+    "brand": "",
+    "price": Number,
+    "category": "document_id",
+    "stock": number,
+    "rating": number,
+    "review": number,
+    "featured": false
+}`
+
 ## GET
 -  Get all Products
  `/products`
