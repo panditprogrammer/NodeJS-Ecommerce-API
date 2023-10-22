@@ -4,23 +4,23 @@ const mongoose = require("mongoose");
 
 
 // create schemas for product 
-const productSchema = mongoose.Schema({
+const productSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true
+        required: true,
     },
     description: {
         type: String,
         required: true
     },
-    richDescription:{
+    richDescription: {
         type: String,
         default: null
     },
-    image:[{
-        type:String
+    image: [{
+        type: String
     }],
-    brand:{
+    brand: {
         type: String,
         required: true
     },
@@ -28,7 +28,7 @@ const productSchema = mongoose.Schema({
         type: Number,
         default: 0
     },
-    category:{
+    category: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Category",
         required: true
@@ -39,24 +39,31 @@ const productSchema = mongoose.Schema({
         min: 0,
         max: 255
     },
-    rating:{
+    rating: {
         type: Number,
         default: 0,
     },
-    review:{
+    review: {
         type: Number,
         default: 0,
     },
-    featured:{
-        type:Boolean,
+    featured: {
+        type: Boolean,
         default: false
     },
-    created_on:{
+    created_on: {
         type: Date,
         default: Date.now
     }
 
+},
+{
+    toJSON : {virtuals : true} // for alias
 });
+
+productSchema.virtual("id").get(function(){
+    return this._id;
+})
 
 // create Collection in mongoDB 
 exports.Product = mongoose.model('product', productSchema);

@@ -18,7 +18,7 @@ server.use(morgan("tiny"))
 
 // product router 
 const productRouter = require("./routers/products");
-server.use("/",productRouter);
+server.use("/products",productRouter);
 
 // category router 
 const categoryRouter = require("./routers/categories");
