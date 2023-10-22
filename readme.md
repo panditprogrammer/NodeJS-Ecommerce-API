@@ -3,11 +3,12 @@
 
 ## POST 
 - Create New Product
-`/products`
+```/products```
 
 use these fields to create new product
 
-`{
+
+```{
    "name": "",
     "description":"",
     "richDescription": "",
@@ -19,7 +20,7 @@ use these fields to create new product
     "rating": number,
     "review": number,
     "featured": false
-}`
+}```
 
 ## GET
 -  Get all Products
