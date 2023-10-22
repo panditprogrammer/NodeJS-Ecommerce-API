@@ -44,7 +44,7 @@ router.post("/", async (req, res) => {
 
 
 
-// get all products (sometime with categories)
+// get all products 
 router.get("/", async (req, res) => {
     let filter = {};
 

@@ -1,7 +1,8 @@
 <!-- get routes  -->
-# Product Routes 
+# An Ecommerce Restful API created by Pandit Programmer using NodeJS (ExpressJS) and MongoDB Database 
 
 ## POST 
+
 - Create New Product
 ```
 /products
@@ -10,7 +11,8 @@
 use these fields to create new product
 
 
-```{
+```
+{
    "name": "",
     "description":"",
     "richDescription": "",
@@ -26,12 +28,15 @@ use these fields to create new product
 ```
 
 ## GET
+
 -  Get all Products
+
  ```
  /products
  ```
 
 -  Get all Products by price 
+
  /products?price=min&price=max
 
 -  Get all Products Filter by Categories and price
@@ -75,34 +80,48 @@ use these fields to create new product
 ```
 
 # Category Routes
-Here is the Supported HTTP Routes (GET, POST, PUT and DELETE)
+
+Here is the Supported HTTP Routes (GET, POST, PUT and DELETE) for category
 
 - Create New Category
+
+## POST
 ```
 /categories
 ```
 
+
+## GET
 - Get all Categories
+
 ```
 /categories
 ```
 
 - Get Single Category by id
+
 ```
 /categories/:id
 ```
+
+## PUT
 
 - Update single category by id 
+
 ```
 /categories/:id
 ```
 
+## DELETE
+
 - Delete one or more Categories  
+
 ```
 /categories/delete?id=id1,id2,idN
 ```
 
 - Delete all at once
+
 ```
 /categories/delete
 ```
