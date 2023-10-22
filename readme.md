@@ -68,7 +68,7 @@ use these fields to create new product
 /products?min=500&max=1500
 ```
 
--- Limit and offset Products list
+- Limit and offset Products list
 
 ```
 /products?limit=10&offset=5
@@ -107,7 +107,15 @@ Here is the Supported HTTP Routes (GET, POST, PUT and DELETE) for category
 ```
 /categories
 ```
+- Use these fields to create new Category
 
+```
+{
+    "name" : "",
+    "icon": "",
+    "color": ""
+}
+```
 
 ## GET
 - Get all Categories
