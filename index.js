@@ -22,6 +22,11 @@ server.use(morgan("tiny"))
 // for json auth 
 const authJwt = require("./helpers/jwt");
 server.use(authJwt());
+// Error handling (any type of error will send this response ) : it's a global error handling
+const errorHanlder = require("./helpers/errorHander");
+server.use((error,req,res,next) => {
+    errorHanlder(error,req,res,next);
+});
 
 
 // product router 
