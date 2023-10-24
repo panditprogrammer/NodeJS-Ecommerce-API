@@ -6,6 +6,10 @@ const port = process.env.PORT;
 const api_url = process.env.API_URL;
 
 // ==================== Middlewares ==========================
+// for cors policy (allow all origins)
+const cors = require("cors");
+server.use(cors());
+server.options("*",cors());
 
 // middleware for json 
 const bodyParser = require("body-parser");
@@ -14,6 +18,10 @@ server.use(bodyParser.json());
 // for http request log 
 const morgan = require("morgan");
 server.use(morgan("tiny"))
+
+// for json auth 
+const authJwt = require("./helpers/jwt");
+server.use(authJwt);
 
 
 // product router 
