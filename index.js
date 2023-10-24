@@ -24,7 +24,9 @@ server.use("/products",productRouter);
 const categoryRouter = require("./routers/categories");
 server.use("/categories", categoryRouter);
 
-
+// user router 
+const userRouter = require("./routers/users");
+server.use("/users",userRouter);
 // ==================== Middlewares ends ==========================
 
 
