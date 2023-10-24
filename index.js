@@ -21,7 +21,7 @@ server.use(morgan("tiny"))
 
 // for json auth 
 const authJwt = require("./helpers/jwt");
-server.use(authJwt);
+server.use(authJwt());
 
 
 // product router 

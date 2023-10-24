@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
-const { path } = require("path");
+var { expressjwt: jwt } = require("express-jwt");
 
 // include product schema
 const { Product } = require("../models/product");
