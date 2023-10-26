@@ -42,6 +42,10 @@ server.use("/products",productRouter);
 const categoryRouter = require("./routers/categories");
 server.use("/categories", categoryRouter);
 
+// order router 
+const orderRouter = require("./routers/orders");
+server.use("/orders", orderRouter);
+
 // user router 
 const userRouter = require("./routers/users");
 server.use("/users",userRouter);

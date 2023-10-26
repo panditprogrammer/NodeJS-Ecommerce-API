@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
-var { expressjwt: jwt } = require("express-jwt");
+// var { expressjwt: jwt } = require("express-jwt");
 
 // include product schema
 const { Product } = require("../models/product");
@@ -69,8 +69,7 @@ router.post("/", async (req, res) => {
     product.save().then((response)=>{
         return res.status(200).send(response);
     }).catch((error)=>{
-
-        return res.status(422).send(error);
+        return res.status(422).send({success: false,message: error});
     });
 
 });
