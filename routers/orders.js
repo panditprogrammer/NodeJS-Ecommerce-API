@@ -2,7 +2,8 @@ const {Order} = require("../models/order");
 const express = require("express");
 const router = express.Router();
 const { OrderItem } = require("../models/order-item");
-
+const mongoose = require("mongoose");
+const { populate } = require("dotenv");
 
 // create new order 
 router.post("/",async (req, res) => {
@@ -52,13 +53,30 @@ router.post("/",async (req, res) => {
 
 // get all orders 
 router.get("/", (req, res) => {
-    Order.find().then((response) => {
+
+    // get user's info by reference sort the result newest first
+    Order.find().populate("user",["name","email"]).populate({path: "orderItems", populate: {path: "product", populate: "category"}}).sort({"orderedDate": -1}).then((response) => {
         return res.status(200).json(response);
     }).catch((error) => {
         return res.status(500).send(error);
     })
 })
 
+
+
+// get single order 
+router.get("/:id", async (req, res) => {
+    if (!mongoose.isValidObjectId(req.params.id)) {
+        return res.status(400).json({ success: false, message: "Invalid Order id!" });
+    }
+
+    const order = await Order.findById(req.params.id).populate("user",["name","email"]).populate({path: "orderItems", populate: {path: "product", populate: "category"}}).sort({"orderedDate": -1});
+    if (!order) {
+        return res.status(404).json({ success: false, message: "Order not found!" });
+    }
+
+    res.status(200).send(order);
+});
 
 
 
