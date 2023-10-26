@@ -76,7 +76,8 @@ router.post("/login", async (req, res) => {
     if (user && bcrypt.compareSync(req.body.password, user.passwordHash)) {
 
         const token = jwtoken.sign({
-            userId : user.id
+            userId : user.id,
+            isAdmin : user.admin
         },process.env.JWT_SECRET,{expiresIn: "1d"})
 
         return res.status(200).json({user: user.email,token: token});

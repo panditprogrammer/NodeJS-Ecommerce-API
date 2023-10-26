@@ -6,11 +6,7 @@ function errorHanlder(error, req, res, next) {
         return res.status(401).json({ success: false, message: "You are not authorized!"});
     }
 
-    if (error.name === "ValidationError") {
-        return res.status(401).json({ success: false, error: error });
-    }
-
-    return res.status(500).json({success: false,message: "Something went wrong!"});
+    return res.send(error);
 
 }
 

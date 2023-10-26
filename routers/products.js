@@ -66,13 +66,12 @@ router.post("/", async (req, res) => {
     });
 
     //    save to database 
-    product = await product.save();
+    product.save().then((response)=>{
+        return res.status(200).send(response);
+    }).catch((error)=>{
 
-    if (!product) {
-        return res.status(500).json({ success: false, message: product });
-    }
-
-    return res.status(200).send(product);
+        return res.status(422).send(error);
+    });
 
 });
 
