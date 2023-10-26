@@ -55,5 +55,5 @@ userSchema.virtual("id").get(function(){
 })
 
 
-exports.User = mongoose.model('user', userSchema);
+exports.User = mongoose.model('User', userSchema);
 

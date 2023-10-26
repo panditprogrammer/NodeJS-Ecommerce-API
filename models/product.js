@@ -66,4 +66,4 @@ productSchema.virtual("id").get(function(){
 })
 
 // create Collection in mongoDB 
-exports.Product = mongoose.model('product', productSchema);
+exports.Product = mongoose.model('Product', productSchema);
