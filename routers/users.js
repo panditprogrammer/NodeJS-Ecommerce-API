@@ -23,7 +23,7 @@ router.get("/", async (req, res) => {
 
 
 // create new user 
-router.post("/", async (req, res) => {
+router.post("/register", async (req, res) => {
     let user = new User({
         name: req.body.name,
         email: req.body.email,
@@ -62,6 +62,25 @@ router.get("/:id", async (req, res) => {
     }
     res.status(200).send(user);
 })
+
+
+// delete one or more user(s) by id
+router.delete("/delete", (req, res) => {
+    let filter = {};
+
+    // delete multiple documents 
+    if (req.query.id) {
+        filter = { _id: { $in: req.query.id.split(",") } };
+    }
+
+
+    User.deleteMany(filter).then(user => {
+        return res.status(200).json(user);
+    }).catch((error) => {
+        return res.status(400).json({ success: false, error: error });
+    })
+
+});
 
 
 // login user 

@@ -20,10 +20,9 @@ function authJwt() {
 
 
 
-async function isRevoked(req,payload){
-    // (allow only admin user not customer )
-    console.log(payload);
-    return payload.isAdmin;
+// (allow only admin user ) 
+async function isRevoked(req,token){
+  return !token.payload.isAdmin
 
 }
 
