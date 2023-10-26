@@ -80,5 +80,42 @@ router.get("/:id", async (req, res) => {
 
 
 
+// update order 
+router.put("/:id", async (req, res) => {
+
+    if (!mongoose.isValidObjectId(req.params.id)) {
+        return res.status(400).json({ success: false, message: "Invalid order id!" });
+    }
+
+    const order = await Order.findByIdAndUpdate(req.params.id, {
+       status: req.body.status
+    }, { new: true }); // return updated data
+
+    if (!order) {
+        return res.status(404).send("The order cannot be updated!");
+    }
+    res.status(200).send(order);
+})
+
+
+
+// delete delete 
+router.delete("/delete/", (req, res) => {
+    let filter = {};
+
+    // delete multiple documents 
+    if (req.query.id) {
+        filter = { _id: { $in: req.query.id.split(",") } };
+    }
+
+
+    Order.deleteMany(filter).then(order => {
+        return res.status(200).json(order);
+    }).catch((error) => {
+        return res.status(400).json({ success: false, error: error });
+    })
+
+});
+
 
 module.exports = router;
