@@ -3,15 +3,14 @@ var { expressjwt: jwt } = require("express-jwt");
 
 function authJwt() {
     return jwt({
-            secret: process.env.JWT_SECRET,
-            algorithms: ["HS256"],
-            isRevoked: isRevoked
-        }).unless({
+        secret: process.env.JWT_SECRET,
+        algorithms: ["HS256"],
+        isRevoked: isRevoked
+    }).unless({
         path: [
-            {
-                url: /\/categories(.*)/, methods: ["GET", "OPTIONS"],
-                url: /\/products(.*)/, methods: ["GET", "OPTIONS"],
-            },
+            { url: /\/products(.*)/, methods: ["GET", "OPTIONS"] },
+            { url: /\/categories(.*)/, methods: ["GET", "OPTIONS"] },
+            { url: /\/public\/uploads(.*)/, methods: ["GET", "OPTIONS"] },
             "/users/login",
             "/users/register"
         ]
@@ -21,8 +20,8 @@ function authJwt() {
 
 
 // (allow only admin user ) 
-async function isRevoked(req,token){
-  return !token.payload.isAdmin
+async function isRevoked(req, token) {
+    return !token.payload.isAdmin
 
 }
 
