@@ -290,6 +290,15 @@ Only these fields can be updated
 /users/login
 ```
 
+Use these fields to login
+
+```
+{
+    email: "email@example.com",
+    password: "secret_password"
+}
+```
+
 ## PUT 
 
 - Update user by id
@@ -322,4 +331,13 @@ country: "String"
 
 ```
 /users/:id
+```
+
+
+## DELETE 
+
+- Delete one or more user by ids
+
+```
+/users/delete?id=id1,id2,idN
 ```
