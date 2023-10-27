@@ -3,7 +3,7 @@ const express = require("express");
 const router = express.Router();
 const { OrderItem } = require("../models/order-item");
 const mongoose = require("mongoose");
-const { populate } = require("dotenv");
+
 
 // create new order 
 router.post("/", async (req, res) => {
@@ -28,14 +28,14 @@ router.post("/", async (req, res) => {
 
     // calculate price in an array 
     const totalPriceArr = await Promise.all(orderItemsIdsResolved.map(async orderItemId => {
-        const orderItem = await OrderItem.findById(orderItemId).populate("product","price");
+        const orderItem = await OrderItem.findById(orderItemId).populate("product", "price");
 
         // return each product price according to their quantity 
         return orderItem.product.price * orderItem.quantity;
     }))
 
 
-    const totalPrice = totalPriceArr.reduce((a,b) => a + b, 0);
+    const totalPrice = totalPriceArr.reduce((a, b) => a + b, 0);
 
     // create Order 
     let order = new Order({
@@ -105,7 +105,7 @@ router.put("/:id", async (req, res) => {
         return res.status(404).send("The order cannot be updated!");
     }
     res.status(200).send(order);
-})
+});
 
 
 
@@ -133,6 +133,38 @@ router.delete("/:id", (req, res) => {
     })
 
 });
+
+
+// calculate total Sales 
+router.get("/get/totalsales", async (req, res) => {
+
+    const totalSales = await Order.aggregate([
+        { $group: { _id: null, totalsales: { $sum: "$totalPrice" } } },
+    ]);
+
+    if(!totalSales){
+        return res.status(400).json({success: false,message: "The Order sales cannot be generated!"});
+    }
+
+    return res.status(200).json({success: true,totalSales: totalSales.pop().totalsales});
+
+});
+
+
+// calculate total order count 
+router.get("/get/count", async (req, res) => {
+
+    const count = await Order.countDocuments();
+
+    if(!count){
+        return res.status(400).json({success: false,message: "No Orders available!"});
+    }
+
+    return res.status(200).json({success: true,count});
+
+});
+
+
 
 
 module.exports = router;
