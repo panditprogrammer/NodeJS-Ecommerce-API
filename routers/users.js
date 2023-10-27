@@ -47,6 +47,28 @@ router.post("/register", async (req, res) => {
     return res.status(201).send(user);
 })
 
+// update user  
+router.put("/:id", async (req, res) => {
+
+    if (!mongoose.isValidObjectId(req.params.id)) {
+        return res.status(400).json({ success: false, message: "Invalid User id!" });
+    }
+
+    const user = await User.findByIdAndUpdate(req.params.id, {
+        name: req.body.name,
+        phone: req.body.phone,
+        street: req.body.street,
+        apartment: req.body.apartment,
+        zip: req.body.zip,
+        city: req.body.city,
+        country: req.body.country
+    }, { new: true });
+
+    if (!user) {
+        return res.status(400).json({ success: false, message: "User cannot be updated!" });
+    }
+    return res.status(201).send(user);
+})
 
 
 // get single user 
@@ -95,11 +117,11 @@ router.post("/login", async (req, res) => {
     if (user && bcrypt.compareSync(req.body.password, user.passwordHash)) {
 
         const token = jwtoken.sign({
-            userId : user.id,
-            isAdmin : user.admin
-        },process.env.JWT_SECRET,{expiresIn: "1d"})
+            userId: user.id,
+            isAdmin: user.admin
+        }, process.env.JWT_SECRET, { expiresIn: "1d" })
 
-        return res.status(200).json({user: user.email,token: token});
+        return res.status(200).json({ user: user.email, token: token });
     } else {
         return res.status(400).json({ success: false, message: "password is wrong!" });
     }
