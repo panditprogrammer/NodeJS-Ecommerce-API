@@ -17,7 +17,7 @@ use these fields to create new product
    "name": "",
     "description":"",
     "richDescription": "",
-    "image": [],
+    "image": "",
     "brand": "",
     "price": Number,
     "category": "document_id",
@@ -83,6 +83,21 @@ use these fields to create new product
 /products/:id
 ```
 
+```
+{
+    "name": "",
+    "description":"",
+    "richDescription": "",
+    "brand": "",
+    "price": Number,
+    "category": "document_id",
+    "stock": number,
+    "rating": number,
+    "review": number,
+    "featured": false
+}
+```
+
 - Upload product images by id
 
 ```
@@ -145,6 +160,16 @@ Here is the Supported HTTP Routes (GET, POST, PUT and DELETE) for category
 /categories/:id
 ```
 
+Only these fields can be updated
+
+```
+{
+    name: "String",
+    icon: "String",
+    color: "String"
+}
+```
+
 ## DELETE
 
 - Delete one or more Categories  
@@ -157,4 +182,144 @@ Here is the Supported HTTP Routes (GET, POST, PUT and DELETE) for category
 
 ```
 /categories/delete
+```
+
+
+# Orders Routes 
+
+## POST
+
+- Create new Order
+
+```
+/orders
+```
+
+```
+{
+    "orderItems":[
+        {
+            "quantity": Number,
+            "product": Product_id
+        },
+        
+    ],
+   "shippingAddress1": "String",
+   "shippingAddress2": "String",
+   "city": "String",
+   "zip": "String",
+   "country": "String",
+   "phone": "String",
+   "status": "Pending",
+   "user": User_id
+}
+```
+
+
+## PUT
+
+- Update order 
+
+```
+/orders/:id
+```
+
+Only these fields can be updated
+
+```
+{
+    "status": "Delivered"
+}
+```
+
+
+## GET
+
+- Get all Orders
+
+```
+/orders
+```
+
+- Get Single order by id
+
+```
+/orders/:id
+```
+
+- Get total Orders
+
+```
+/orders/get/count
+```
+
+- Get total Sales
+
+```
+/orders/get/totalsales
+```
+
+- Get orders by user_id
+
+```
+/orders/get/user/:userId
+```
+
+
+## DELETE 
+
+- Delete Order by id
+
+```
+/orders/:id
+```
+
+# Users Routes
+
+## POST
+
+- Create new user
+
+```
+/users/register
+```
+
+- Login User (authenticate user)
+
+```
+/users/login
+```
+
+## PUT 
+
+- Update user by id
+
+```
+/users/:id
+```
+
+Only these fields can be updated
+
+```
+name: "String",
+phone: "String",
+street: "String",
+apartment: "String",
+zip: "String",
+city: "String",
+country: "String"
+```
+
+## GET 
+
+- Get all users
+
+```
+/users
+```
+
+- Get single user by id
+
+```
+/users/:id
 ```

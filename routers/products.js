@@ -43,17 +43,27 @@ const uploadOptions = multer({ storage: storage })
 
 //====================  routes
 // insert new product
-router.post("/", async (req, res) => {
+router.post("/", uploadOptions.single("image"), async (req, res) => {
 
     const category = await Category.findById(req.body.category);
     if (!category) {
         return res.status(400).json({ success: false, message: "Invalid Category!" });
     }
 
+    const file = req.file;
+
+    if(!file) {
+        return res.status(400).send({success: false,message: "Image is required"});
+    }
+
+    const fileName = file.filename;
+    const basePath = `${req.protocol}://${req.get("host")}/public/uploads/`;
+
     let product = new Product({
         name: req.body.name,
         description: req.body.description,
         richDescription: req.body.richDescription,
+        image: `${basePath}${fileName}`,
         images: [],
         brand: req.body.brand,
         price: req.body.price,
