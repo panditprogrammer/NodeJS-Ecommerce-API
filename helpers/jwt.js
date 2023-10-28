@@ -11,6 +11,7 @@ function authJwt() {
             { url: /\/products(.*)/, methods: ["GET", "OPTIONS"] },
             { url: /\/categories(.*)/, methods: ["GET", "OPTIONS"] },
             { url: /\/public\/uploads(.*)/, methods: ["GET", "OPTIONS"] },
+            { url: /\/(.*)/, methods: ["GET", "OPTIONS"] },
             "/users/login",
             "/users/register"
         ]

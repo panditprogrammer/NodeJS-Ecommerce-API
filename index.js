@@ -2,8 +2,8 @@ const express = require("express");
 const server = express();
 
 require("dotenv/config");
-const port = process.env.PORT;
-const api_url = process.env.API_URL;
+const port = process.env.PORT || 3000;
+// const api_url = process.env.API_URL;
 
 // ==================== Middlewares ==========================
 // for cors policy (allow all origins)
@@ -25,6 +25,7 @@ server.use(authJwt());
 
 // for static files (publish a folder)
 server.use("/public/uploads",express.static(__dirname+"/public/uploads"));
+server.use("/",express.static(__dirname+"/public/"));
 
 
 // Error handling (any type of error will send this response ) : it's a global error handling
@@ -69,5 +70,5 @@ mongoose.connect(process.env.CONNECTION_STRING, {
     })
 
 server.listen(port, () => {
-    console.log(`server is running http://localhost:${port}${api_url}`);
+    console.log(`server is running http://localhost:${port}`);
 });
